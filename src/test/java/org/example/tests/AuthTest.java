@@ -15,7 +15,7 @@ public class AuthTest {
 
     static final String CORRECT_EMAIL = "daria.pinkfloyd@yandex.ru";
     static final String CORRECT_PASSWORD = "9@w3tPUG3WnDXN9";
-
+    static final String INCORRECT_EMAIL = "incorrectd@.ru";
     private static final By LOGIN_LINK = By.xpath("//a[contains(text(),'Войти')]");
     private static final By USER_PROFILE = By.xpath("//a[contains(@class, 'c-top__userpic') and contains(@href, '/users/')]");
     private static final By FORGOT_PASSWORD_LINK = By.xpath("//a[contains(text(),'Забыли?')]");
@@ -73,4 +73,29 @@ public class AuthTest {
             Assertions.assertTrue(success.getText().contains("Код подтверждения"));
         });
     }
+
+    @Test
+    @DisplayName("Попытка входа с некорректными данными")
+    public void loginWithInvalidCredentials() {
+        drivers.parallelStream().forEach(driver -> {
+            driver.get(Utils.PAGE);
+
+            driver.findElement(LOGIN_LINK).click();
+            new LoginPage(driver).login(INCORRECT_EMAIL, CORRECT_PASSWORD);
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            By errorMessageLocator = By.xpath("//span[@class='field-validation-error']");
+
+            boolean errorAppeared;
+            try {
+                WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageLocator));
+                errorAppeared = errorMessage.isDisplayed();
+            } catch (TimeoutException e) {
+                errorAppeared = false;
+            }
+
+            Assertions.assertTrue(errorAppeared, "Должно появиться сообщение об ошибке при вводе некорректных данных");
+        });
+    }
+
 }
