@@ -2,4 +2,6 @@ src/test/resources/
 build
 .idea
 target
+allure-results
+
 
