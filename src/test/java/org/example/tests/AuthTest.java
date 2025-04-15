@@ -30,24 +30,24 @@ public class AuthTest {
         Utils.prepareDrivers();
     }
 
-//    @Test
-//    public void loginWithValidCredentials() {
-//        List<WebDriver> drivers = Utils.getDrivers();
-//        drivers.parallelStream().forEach(webDriver -> {
-//            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-//
-//            webDriver.get(Utils.PAGE);
-//            WebElement loginLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LOGIN_LINK_XPATH)));
-//            loginLink.click();
-//
-//            LoginPage loginPage = new LoginPage(webDriver);
-//            loginPage.login(CORRECT_EMAIL, CORRECT_PASSWORD);
-//
-//            WebElement userProfile = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(USER_PROFILE_XPATH)));
-//            Assertions.assertNotNull(userProfile, "User profile element should be visible after successful login");
-//        });
-//        drivers.forEach(WebDriver::quit);
-//    }
+    @Test
+    public void loginWithValidCredentials() {
+        List<WebDriver> drivers = Utils.getDrivers();
+        drivers.parallelStream().forEach(webDriver -> {
+            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+
+            webDriver.get(Utils.PAGE);
+            WebElement loginLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LOGIN_LINK_XPATH)));
+            loginLink.click();
+
+            LoginPage loginPage = new LoginPage(webDriver);
+            loginPage.login(CORRECT_EMAIL, CORRECT_PASSWORD);
+
+            WebElement userProfile = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(USER_PROFILE_XPATH)));
+            Assertions.assertNotNull(userProfile, "User profile element should be visible after successful login");
+        });
+        drivers.forEach(WebDriver::quit);
+    }
 
     @Test
     public void passwordRecoveryForRegisteredUser() {
