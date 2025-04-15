@@ -59,4 +59,11 @@ public abstract class Page {
     protected boolean isVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
     }
+    public boolean isNotVisible(By locator) {
+        try {
+            return driver.findElements(locator).isEmpty();
+        } catch (Exception e) {
+            return true;
+        }
+    }
 }

@@ -31,4 +31,9 @@ public class FavoritesPage extends Page {
             Thread.currentThread().interrupt();
         }
     }
+
+    public boolean isCarRemoved() {
+        By carLink = By.xpath("//a[contains(@href, '/r/acura/cl/680014/')]");
+        return isNotVisible(carLink);
+    }
 }

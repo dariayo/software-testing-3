@@ -47,6 +47,7 @@ public class FavoritesTest {
             Assertions.assertTrue(carPage.isCarInFavorites(), "Машина должна быть в избранном");
 
             favoritesPage.removeCarFromFavorites();
+            Assertions.assertTrue(favoritesPage.isCarRemoved(), "Машина должна быть удалена из избранного");
         });
     }
 
