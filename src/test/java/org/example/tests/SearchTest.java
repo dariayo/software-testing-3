@@ -27,14 +27,8 @@ public class SearchTest {
 
         drivers.forEach(driver -> {
             driver.get(Utils.PAGE);
-
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LOGIN_LINK_XPATH))).click();
-
-            LoginPage loginPage = new LoginPage(driver);
-            loginPage.login(CORRECT_EMAIL, CORRECT_PASSWORD);
-
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(USER_PROFILE_XPATH)));
+            Utils.loadCookies(driver);
+            driver.navigate().refresh();
         });
     }
 

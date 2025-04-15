@@ -1,4 +1,4 @@
-package org.example.pages;
+package org.example.base;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +24,19 @@ public abstract class Page {
     }
 
     protected void clickIfClickable(By locator) {
-        waitForClickable(locator).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+
+        // Прокрутка до элемента, чтобы он стал полностью видим
+        WebElement element = driver.findElement(locator);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+
+        // Ждём чуть-чуть после скролла
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {}
+
+        element.click();
     }
 
     protected void inputText(By locator, String text) {
