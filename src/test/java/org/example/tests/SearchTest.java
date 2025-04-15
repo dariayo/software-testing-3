@@ -12,40 +12,43 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class SearchTest {
-    private List<WebDriver> drivers;
-    private WebDriverWait wait;
+import static org.example.tests.AuthTest.CORRECT_EMAIL;
+import static org.example.tests.AuthTest.CORRECT_PASSWORD;
 
-    @BeforeAll
-    public static void initDrivers() {
-        Utils.prepareDrivers();
-    }
+public class SearchTest {
+    public static final String LOGIN_LINK_XPATH = "//a[contains(text(),'Войти')]";
+    public static final String USER_PROFILE_XPATH = "//a[contains(@class, 'c-top__userpic') and contains(@href, '/users/')]";
+
+    private List<WebDriver> drivers;
 
     @BeforeEach
     public void setUp() {
-        drivers = Utils.getDrivers();
-        drivers.forEach(driver -> {
-            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        drivers = Utils.createFreshDrivers();
 
+        drivers.forEach(driver -> {
             driver.get(Utils.PAGE);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(AuthTest.LOGIN_LINK_XPATH))).click();
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LOGIN_LINK_XPATH))).click();
 
             LoginPage loginPage = new LoginPage(driver);
-            loginPage.login(AuthTest.CORRECT_EMAIL, AuthTest.CORRECT_PASSWORD);
+            loginPage.login(CORRECT_EMAIL, CORRECT_PASSWORD);
 
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(AuthTest.USER_PROFILE_XPATH)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(USER_PROFILE_XPATH)));
         });
     }
 
     @Test
+    @DisplayName("Поиск автомобиля по бренду должен возвращать результаты")
     public void searchCarByBrand() {
         drivers.parallelStream().forEach(driver -> {
-            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
             SearchPage searchPage = new SearchPage(driver);
             searchPage.searchByBrand("Toyota");
 
-            Assertions.assertTrue(searchPage.areResultsDisplayed());
+            Assertions.assertTrue(searchPage.areResultsDisplayed(),
+                    "Результаты поиска не отображаются");
+            Assertions.assertTrue(searchPage.isResultsTitleContains("Toyota"),
+                    "Заголовок результатов не содержит 'Toyota'");
         });
     }
 

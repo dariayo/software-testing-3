@@ -4,24 +4,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class SearchPage extends Page {
 
     public static final String SEARCH_INPUT_XPATH = "//input[@type='search']";
     public static final String SEARCH_BUTTON_XPATH = "//button[contains(., 'Найти')]";
     public static final String SEARCH_RESULTS_XPATH = "//div[@class='o-f' and @data-slot='site-search.results']";
-    public static final String SEARCH_RESULTS_TITLE_XPATH = "//h1[contains(@class, 'x-title')]";
+    public static final String SEARCH_RESULTS_TITLE_XPATH = "//input[@type='search' and @name='text']";
 
     public SearchPage(WebDriver driver) {
         super(driver);
     }
 
     public void searchByBrand(String brand) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
         WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SEARCH_INPUT_XPATH)));
         searchInput.clear();
         searchInput.sendKeys(brand);
@@ -31,7 +26,6 @@ public class SearchPage extends Page {
     }
 
     public boolean areResultsDisplayed() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             WebElement results = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SEARCH_RESULTS_XPATH)));
             return results.isDisplayed();
@@ -41,10 +35,9 @@ public class SearchPage extends Page {
     }
 
     public boolean isResultsTitleContains(String text) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SEARCH_RESULTS_TITLE_XPATH)));
-            return title.getText().contains(text);
+            WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SEARCH_RESULTS_TITLE_XPATH)));
+            return searchInput.getAttribute("value").contains(text);
         } catch (Exception e) {
             return false;
         }
