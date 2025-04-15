@@ -27,11 +27,9 @@ public abstract class Page {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
 
-        // Прокрутка до элемента, чтобы он стал полностью видим
         WebElement element = driver.findElement(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
 
-        // Ждём чуть-чуть после скролла
         try {
             Thread.sleep(500);
         } catch (InterruptedException ignored) {}
@@ -51,7 +49,7 @@ public abstract class Page {
 
     protected void safeClick(WebElement element) {
         try {
-            Thread.sleep(300);
+            Thread.sleep(700);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
