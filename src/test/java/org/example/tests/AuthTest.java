@@ -1,5 +1,7 @@
 package org.example.tests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.example.pages.LoginPage;
 import org.example.utils.Utils;
 import org.junit.jupiter.api.*;
@@ -28,6 +30,9 @@ public class AuthTest {
     @BeforeEach
     public void setUp() {
         drivers = Utils.createFreshDrivers();
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true));
+
     }
 
     @AfterEach

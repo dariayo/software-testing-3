@@ -10,7 +10,7 @@ import java.util.*;
 public class Utils {
 
     public static final String PAGE = "https://www.drive2.ru/";
-    private static final String COOKIE_FILE = "src/main/resources/cookies.data"; // путь к файлу с куками
+    private static final String COOKIE_FILE = "src/main/resources/cookies.data";
 
     public static List<WebDriver> createFreshDrivers() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
@@ -60,7 +60,7 @@ public class Utils {
 
                 Date expiryDate = null;
                 if (!expiry.equals("null")) {
-                    expiryDate = new Date(Long.parseLong(expiry)); // безопасное восстановление даты
+                    expiryDate = new Date(Long.parseLong(expiry));
                 }
 
                 Cookie cookie = new Cookie.Builder(name, value)
