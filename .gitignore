@@ -8,5 +8,7 @@ cypress/downloads
 cypress/screenshots
 cypress/fixtures
 package-lock.json
+allure-report
+
 
 

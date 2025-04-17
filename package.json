@@ -1,0 +1,14 @@
+{
+  "name": "drive2-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "cypress open",
+    "test:headless": "cypress run"
+  },
+  "devDependencies": {
+    "@cypress/xpath": "^2.0.3",
+    "cypress": "^12.0.0",
+    "@shelex/cypress-allure-plugin": "^2.41.0",
+    "allure-commandline": "^2.25.0"
+  }
+}
