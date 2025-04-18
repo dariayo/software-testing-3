@@ -18,7 +18,7 @@ describe('Работа с избранным: автосервисы', () => {
         cy.get('button.c-button--primary').contains('Сохранить').click();
 
         cy.visit('https://www.drive2.ru/my/bookmarks/');
-        cy.get('a.u-link-area[href*="/o/reflashteam/"]').should('exist');
+        cy.get('a.u-link-area[href*="/o/carbonab/"]').should('exist');
         cy.get('[data-slot="bookmarks.counter"]').should('not.contain', '0');
     });
 

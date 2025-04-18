@@ -6,16 +6,18 @@ describe('Просмотр списка подписчиков', () => {
 
     it('Открывается список подписчиков', () => {
         cy.navigateToPersonalArea();
-        cy.get('a[href*="/followers"]').click();
 
-        cy.contains('h1', 'Мои подписчики').should('be.visible');
+        cy.xpath('//a[contains(@href, "/followers")]').click();
 
-        cy.get('.c-empty-content__header, .x-box').then(($el) => {
-            if ($el.hasClass('c-empty-content__header')) {
-                cy.wrap($el).should('contain', 'Подписчиков пока нет');
-            } else {
-                cy.wrap($el).should('contain', 'подписчик');
-            }
-        });
+        cy.xpath('//h1[contains(text(), "Мои подписчики")]').should('be.visible');
+
+        cy.xpath('//*[contains(@class, "c-empty-content__header") or contains(@class, "x-box")]')
+            .then(($el) => {
+                if ($el.hasClass('c-empty-content__header')) {
+                    cy.wrap($el).should('contain', 'Подписчиков пока нет');
+                } else {
+                    cy.wrap($el).should('contain', 'подписчик');
+                }
+            });
     });
 });

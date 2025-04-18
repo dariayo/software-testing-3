@@ -19,6 +19,7 @@ module.exports = defineConfig({
         env: {
             allure: true,
             allureReuseAfterSpec: true
-        }
+        },
+        chromeWebSecurity: false
     }
 });

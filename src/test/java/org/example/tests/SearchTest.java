@@ -22,7 +22,7 @@ public class SearchTest {
     }
 
     @Test
-    @DisplayName("Поиск автомобиля по бренду должен возвращать результаты")
+    @DisplayName("Поиск автомобиля по марке должен возвращать результаты")
     public void searchCarByBrand() {
         drivers.parallelStream().forEach(driver -> {
             SearchPage searchPage = new SearchPage(driver);
