@@ -3,6 +3,7 @@ package org.example.utils;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.*;
 import java.util.*;
@@ -14,9 +15,10 @@ public class Utils {
 
     public static List<WebDriver> createFreshDrivers() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-
+//        System.setProperty("webdriver.chrome.driver", "src/main/resources/geckodriver");
         List<WebDriver> drivers = new ArrayList<>();
         drivers.add(new ChromeDriver());
+//        drivers.add(new FirefoxDriver());
 
         return drivers;
     }
@@ -24,6 +26,7 @@ public class Utils {
     public static void saveCookies(WebDriver driver) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(COOKIE_FILE))) {
             for (Cookie cookie : driver.manage().getCookies()) {
+                // установлена ли дата истечения куки
                 String expiry = cookie.getExpiry() != null ? String.valueOf(cookie.getExpiry().getTime()) : "null";
                 writer.write(cookie.getName() + ";" +
                         cookie.getValue() + ";" +

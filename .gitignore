@@ -9,6 +9,8 @@ cypress/screenshots
 cypress/fixtures
 package-lock.json
 allure-report
+api-tests/src/main/webapp/node_modules
+api-tests/src/main/webapp/package-lock.json
 
 
 
